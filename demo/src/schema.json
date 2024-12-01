@@ -1,0 +1,182 @@
+{
+    "type": "object",
+    "properties": {
+      "prepare": {
+        "type": "object",
+        "description": "Preparation stage for the experiment",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the stage"
+          },
+          "params": {
+            "type": "object",
+            "properties": {
+              "size": {
+                "type": "integer",
+                "description": "Size parameter for preparation"
+              }
+            }
+          },
+          "inputs": {
+            "type": "array",
+            "description": "List of input paths",
+            "items": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "description": "Path to input files or directories"
+                }
+              }
+            }
+          },
+          "outputs": {
+            "type": "array",
+            "description": "List of output paths",
+            "items": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "description": "Path to output files or directories"
+                }
+              }
+            }
+          },
+          "script": {
+            "type": "array",
+            "description": "Commands to execute in this stage",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "train": {
+        "type": "object",
+        "description": "Training stage for the model",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "params": {
+            "type": "object",
+            "properties": {
+              "num_iters": {
+                "type": "integer",
+                "description": "Number of training iterations"
+              }
+            }
+          },
+          "inputs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string"
+                },
+                "files": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "List of required input files"
+                }
+              }
+            }
+          },
+          "outputs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string"
+                },
+                "files": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "List of produced output files"
+                }
+              }
+            }
+          },
+          "script": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "present_model": {
+        "type": "object",
+        "description": "Stage to present the trained model",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "inputs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "outputs": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "env": {
+            "type": "object",
+            "properties": {
+              "MLDEV_MODEL_PATH": {
+                "type": "string",
+                "description": "Environment variable pointing to the model path"
+              },
+              "RESULTS_PATH": {
+                "type": "string",
+                "description": "Environment variable pointing to results path"
+              }
+            }
+          },
+          "script": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "pipeline": {
+        "type": "object",
+        "description": "The main pipeline that orchestrates stages",
+        "properties": {
+          "runs": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "References to defined stages"
+            }
+          }
+        }
+      }
+    },
+    "required": ["prepare", "train", "present_model", "pipeline"]
+}
+  

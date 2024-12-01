@@ -1,0 +1,11 @@
+!PythonFunction mapping
+!BasicStage mapping
+!MonitoringService mapping
+!GenericPipeline mapping
+!FilePath mapping
+!path mapping
+!NgrokService mapping
+!ForEach mapping
+!If mapping
+!ExpressionEval mapping
+!MultiLine mapping
