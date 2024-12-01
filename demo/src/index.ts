@@ -41,7 +41,7 @@ const customTags = tagsText
 const monacoYaml = configureMonacoYaml(monaco, {
   // Uncomment me to enable schema (tried to make one for MLDev, but it's not working)
   // enableSchemaRequest: true,
-  // schemas: [defaultSchema]
+  // schemas: [defaultSchema],
   customTags: customTags,
 })
 
@@ -129,32 +129,33 @@ const ed = editor.create(document.getElementById('editor')!, {
 const select = document.getElementById('schema-selection') as HTMLSelectElement
 
 // eslint-disable-next-line unicorn/prefer-top-level-await
-fetch('https://www.schemastore.org/api/json/catalog.json').then(async (response) => {
-  if (!response.ok) {
-    return
-  }
-  const catalog = (await response.json()) as JSONSchemaForSchemaStoreOrgCatalogFiles
-  const schemas = [defaultSchema]
-  catalog.schemas.sort((a, b) => a.name.localeCompare(b.name))
-  for (const { fileMatch, name, url } of catalog.schemas) {
-    const match =
-      typeof name === 'string' && fileMatch?.find((filename) => /\.ya?ml$/i.test(filename))
-    if (!match) {
-      continue
-    }
-    const option = document.createElement('option')
-    option.value = match
+// Uncomment me to enable schema (tried to make one for MLDev, but it's not working)
+// fetch('https://www.schemastore.org/api/json/catalog.json').then(async (response) => {
+//   if (!response.ok) {
+//     return
+//   }
+//   const catalog = (await response.json()) as JSONSchemaForSchemaStoreOrgCatalogFiles
+//   const schemas = [defaultSchema]
+//   catalog.schemas.sort((a, b) => a.name.localeCompare(b.name))
+//   for (const { fileMatch, name, url } of catalog.schemas) {
+//     const match =
+//       typeof name === 'string' && fileMatch?.find((filename) => /\.ya?ml$/i.test(filename))
+//     if (!match) {
+//       continue
+//     }
+//     const option = document.createElement('option')
+//     option.value = match
 
-    option.textContent = name
-    select.append(option)
-    schemas.push({
-      fileMatch: [match],
-      uri: url
-    })
-  }
+//     option.textContent = name
+//     select.append(option)
+//     schemas.push({
+//       fileMatch: [match],
+//       uri: url
+//     })
+//   }
 
-  monacoYaml.update({ schemas })
-})
+//   monacoYaml.update({ schemas })
+// })
 
 select.addEventListener('change', () => {
   const oldModel = ed.getModel()
